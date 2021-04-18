@@ -128,11 +128,11 @@ bok4=(*this)[3].Odleglosc((*this)[0]);
 
 if(bok1>bok2)
     {
-    std::cout << "Dluzsze przeciwlegle boki";
+    std::cout<< std::endl<< "Dluzsze przeciwlegle boki";
     }
 else
     {
-    std::cout << "Krotsze przeciwlegle boki";
+    std::cout<< std::endl<< "Krotsze przeciwlegle boki";
     }
 
 if(abs(bok1-bok3)<=0.0001)
@@ -166,7 +166,6 @@ else
 std::cout << "Dlugosc pierwszego boku: " << std::setprecision(20) << bok2 << std::endl;
 std::cout << "Dlugosc pierwszego boku: " << std::setprecision(20) << bok4 << std::endl << std::endl;
 }
-
 
 
 
