@@ -1,5 +1,7 @@
 #include "Macierz2x2.hh"
-#include <tgmath.h>
+
+
+#define MIN_ROZNICA 0.001
 
 
 /*!
@@ -13,7 +15,14 @@
  */
 double Macierz::operator() (int IndeksW, int IndeksK)const
 {
-return elem[IndeksW][IndeksK];
+if((IndeksW >= RozmiarW) && (IndeksK >= RozmiarK))
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return elem[IndeksW][IndeksK];
+    }
 }
 
 
@@ -28,7 +37,14 @@ return elem[IndeksW][IndeksK];
  */
 double& Macierz::operator() (int IndeksW, int IndeksK)
 {
-return elem[IndeksW][IndeksK];
+if((IndeksW >= RozmiarW) && (IndeksK >= RozmiarK))
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return elem[IndeksW][IndeksK];
+    }
 }
 
 /*!
@@ -54,6 +70,19 @@ elem[0][0]=elem0;
 elem[0][1]=elem1;
 elem[1][0]=elem2;
 elem[1][1]=elem3;
+}
+
+bool Macierz::operator== (Macierz M)const
+{
+for(int i=0; i<RozmiarW; i++)
+    {
+    for(int j=0; j<RozmiarK; j++)
+        {
+        if((abs((*this)(i,j)-M(i,j)))>=MIN_ROZNICA)
+        {return false;}
+        }
+    }
+return true;
 }
 
 /*!

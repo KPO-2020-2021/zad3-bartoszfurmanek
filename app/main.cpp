@@ -76,17 +76,13 @@ bool ZapisWspolrzednychDoPliku(const char *sNazwaPliku, const Prostokat Pr)
 int main()
 {
 
-  Prostokat             Pr;     
+  Prostokat             Pr({10,20},{70,20},{70,40},{10,40});     
   PzG::LaczeDoGNUPlota  Lacze;      //Zmienna do operowania na gnuplocie
   char                  Opcja;      //Zmienna przechowujaca informacje o wybranej opcji w menu
   double                Kat;        //Kat obrotu prostokata    
-  int                   Powtorzenia;//Ilosc powtorzen obrotu prostokata
+  int                   Powtorzenia, i, j;//Ilosc powtorzen obrotu prostokata oraz indeks pomocniczny
   Wektor2D              Przesuniecie;//Wektor przesuniecia prostokata
-
-   Pr[0]= Wektor2D(10,20);
-   Pr[1]= Wektor2D(70,20);
-   Pr[2]= Wektor2D(70,40);
-   Pr[3]= Wektor2D(10,40);      //Ustalenie wierzcholkow prostokata
+  
 
   Lacze.DodajNazwePliku("prostokat.dat",PzG::RR_Ciagly,2);     //Podlaczenie pliku, w ktorym beda zapisywane wspolrzedne do rysowania
 
@@ -116,15 +112,30 @@ int main()
             std::cin >> Powtorzenia;
             std::cin.ignore(100000,'\n');
             
-            Pr.Obrot(Kat, Powtorzenia);                  //Obrot prostokata
-
-            Pr.PorownajBoki();                           //Porownanie dlugosci bokow prostokata
 
             if (!ZapisWspolrzednychDoPliku("prostokat.dat",Pr))
                 {
                 return 1;
                 }
-            Lacze.Rysuj();                                //Rysowania z pliku
+            Lacze.Rysuj();                        //Rysunek pierwotnej pozycji prostokata
+
+            for(i=0; i<Powtorzenia; i++)
+                {   
+                for(j=0; j<50; j++)               //Petla do wykonywania animacji ruchu (50FPS)
+                {
+
+                    Pr.Obrot(Kat/50);             //Obrot prostokata
+                    usleep(20000);
+                    if (!ZapisWspolrzednychDoPliku("prostokat.dat",Pr))
+                        {
+                        return 1;
+                        }
+                    Lacze.Rysuj();                //Rysowanie prostokata                  
+                }
+                }
+
+            Pr.PorownajBoki();                           //Porownanie dlugosci bokow prostokata
+
             std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
             std::cin.ignore(100000,'\n');
             
@@ -137,13 +148,23 @@ int main()
             std::cin >> Przesuniecie;
             std::cin.ignore(100000,'\n');
 
-            Pr.Translacja(Przesuniecie);     //Przesuniecie prostokata o zadany wektora
-
-            if (!ZapisWspolrzednychDoPliku("prostokat.dat",Pr)) 
+            if (!ZapisWspolrzednychDoPliku("prostokat.dat",Pr))
                 {
                 return 1;
-                }    
-            Lacze.Rysuj();                              // Rysowanie z pliku
+                }
+            Lacze.Rysuj();                                    //Rysunek pierwotnej pozycji prostokata
+
+            for(j=0; j<50; j++)                               //Petla do wykonywania animacji ruchu (50FPS)
+                {
+                Pr.Translacja(Przesuniecie*0.02);             //Przesuniecie prostokata o zadany wektor
+                    usleep(20000);
+                    if (!ZapisWspolrzednychDoPliku("prostokat.dat",Pr))
+                        {
+                        return 1;
+                        }
+                    Lacze.Rysuj();                            //Rysowanie prostokata                  
+                }
+
             std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
             std::cin.ignore(100000,'\n');
 

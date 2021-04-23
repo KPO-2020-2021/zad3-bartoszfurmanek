@@ -22,11 +22,13 @@ Wektor2D operator[](int Indeks)const;
 
 Wektor2D& operator[](int Indeks);
 
-double operator()(int IndeksP, int IndeksW)const;
+Prostokat();
 
-double& operator()(int IndeksP, int IndeksW);
+Prostokat(Wektor2D W0,Wektor2D W1,Wektor2D W2,Wektor2D W3);
 
-Prostokat& Obrot(double alfa, int Powtorzenia);
+bool operator == (Prostokat P)const;
+
+Prostokat& Obrot(double alfa);
 
 Prostokat& Translacja(Wektor2D W);
 

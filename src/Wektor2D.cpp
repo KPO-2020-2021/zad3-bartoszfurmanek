@@ -1,6 +1,8 @@
 #include "Wektor2D.hh"
 #include <iostream>
 
+#define MIN_ROZNICA 0.001
+
 
 /*!
  * Metoda służąca do indeksowania Wektora.
@@ -12,7 +14,14 @@
  */
 double Wektor2D::operator [](int Indeks)const
 {
-return Wektor[Indeks];
+if(Indeks >= Rozmiar)
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return Wektor[Indeks];
+    }
 }
 
 
@@ -26,7 +35,14 @@ return Wektor[Indeks];
  */
 double& Wektor2D::operator[](int Indeks)
 {
-return Wektor[Indeks];
+if(Indeks >= Rozmiar)
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return Wektor[Indeks];
+    }
 }
 
 
@@ -140,7 +156,7 @@ bool Wektor2D::operator == (Wektor2D W)const
 {
 for(int i=0; i<Rozmiar; i++)
     {
-    if((*this)[i]!=W[i])
+    if(abs((*this)[i]-W[i])>=MIN_ROZNICA)
         {return false;}
     }
 return true;

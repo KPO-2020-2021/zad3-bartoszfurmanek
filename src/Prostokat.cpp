@@ -10,9 +10,16 @@
  *    Wektor reprezentujacy rzadany wierzcholek
  */
 Wektor2D Prostokat::operator[](int Indeks)const
-{return Punkt[Indeks];}
-
-
+{
+if(Indeks >= 4)
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return Punkt[Indeks];
+    }
+}
 /*!
  * Metoda służąca do indeksowania prostokata.
  * Argumenty:
@@ -22,34 +29,58 @@ Wektor2D Prostokat::operator[](int Indeks)const
  *    Referencja do wektora, ktory reprezentuje rzadany wierzcholek
  */
 Wektor2D& Prostokat::operator[](int Indeks)
-{return Punkt[Indeks];}
+{
+if(Indeks >= 4)
+    {
+    throw std::runtime_error("Blad: Nieodpowiedni numer indeksu");
+    }
+else
+    {
+    return Punkt[Indeks];
+    }
+}
 
 
 /*!
- * Metoda służąca do indeksowania prostokata.
- * Argumenty:
- *    this - Indeksowany prostokat.
- *    IndeksP - Indeks prostokata (numer wierzcholka)
- *    IndeksW - Indeks wektora (numer skladowej)
- * Zwraca:
- *    Wartosc danej skladowej wektora reprezentujacego wierzcholek prostokata.
+ * Konstruktor bezparametryczny dla Prostokata.
  */
-double Prostokat::operator()(int IndeksP, int IndeksW)const
-{return (Punkt[IndeksP])[IndeksW];}
+Prostokat::Prostokat()
+{
+    for(int i=0; i<4; i++)
+        {
+        Punkt[i]={0,0}; 
+        }
+}
 
 
 /*!
- * Metoda służąca do indeksowania prosotkata.
- * Argumenty:
- *    this - Indeksowany prostokat.
- *    IndeksP - Indeks prostokata (numer wierzcholka)
- *    IndeksW - Indeks wektora (numer skladowej)
- * Zwraca:
- *    Referencja do danej wartosci skladowej wektora reprezentujacego wierzcholek prostokata.
+ * Konstruktor parametryczny dla Prostokata.
  */
-double& Prostokat::operator()(int IndeksP, int IndeksW)
-{return (Punkt[IndeksP])[IndeksW];}
+Prostokat::Prostokat(Wektor2D W0,Wektor2D W1,Wektor2D W2,Wektor2D W3)
+{
+Punkt[0]=W0;
+Punkt[1]=W1;
+Punkt[2]=W2;
+Punkt[3]=W3;
+}
 
+/*!
+ * Metoda służąca do porównywania prostokatow.
+ * Argumenty:
+ *    this - Pierwszy składnik porownywania.
+ *    P - Drugi składnik porownywania.
+ * Zwraca:
+ *    True, jeżeli wektory są takie same lub False, jeżeli nie są.
+ */
+bool Prostokat::operator == (Prostokat P)const
+{
+for(int i=0; i<4; i++)
+    {
+    if(!((*this)[i]==P[i]))
+        {return false;}
+    }
+return true;
+}
 
 /*!
  * Metoda służąca do obracania prostokata o zadany kat
@@ -60,14 +91,8 @@ double& Prostokat::operator()(int IndeksP, int IndeksW)
  * Zwraca:
  *    Obrocony prostokat
  */
-Prostokat& Prostokat::Obrot(double alfa, int Powtorzenia)
+Prostokat& Prostokat::Obrot(double alfa)
 {
-alfa*=(double)Powtorzenia;
-alfa=fmod(alfa, 360);  //Usuniecie okresow (Dzielenie z reszta). To działanie ma na celu zminimalizowanie ilości błędów obliczeń
-if(alfa<0)
-    {
-    alfa+=360; //Zmiana na dodatni kat
-    }
 alfa=(alfa*PI)/180.0; //Zamiana na radiany
 for(int i=0; i<4; i++)
     {

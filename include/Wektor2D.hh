@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <tgmath.h>
+#include <math.h>
 
 #define ROZMIAR_WEKTORA 2
 

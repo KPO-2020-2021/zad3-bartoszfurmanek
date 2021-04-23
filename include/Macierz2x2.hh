@@ -2,7 +2,6 @@
 #define MACIERZ2X2_HH
 
 #include "Wektor2D.hh"
-#include <iostream>
 
 #define WYMIAR_W 2
 #define WYMIAR_K 2
@@ -28,6 +27,8 @@ class Macierz {
   Macierz();
 
   Macierz(double, double, double, double); //Dla macierzy 2x2
+
+  bool operator== (Macierz M)const;
   
   Macierz operator+ (Macierz M)const;
 
