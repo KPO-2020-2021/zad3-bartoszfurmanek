@@ -285,4 +285,50 @@ return Strm;
 }
 
 
+double Macierz::Wyznacznik()const
+{
+    int i,j,k;
+    double mnoznik;
+    double Macierz[WYMIAR][WYMIAR];        //Macierz pomocnicza
+    double Wyznacznik=1;
+
+    if(this->RozmiarW!=this->RozmiarK)
+        {
+            throw std::runtime_error("Blad: Macierz nie jest kwadratowa");
+            exit(0);
+        }
+
+    for(i=0; i<this->RozmiarW; i++)
+        {
+        for(j=0; j<this->RozmiarK; j++)
+            {
+            Macierz[i][j]= (*this)(i,j);
+            }    
+        }
+
+    for(i=0; i<this->RozmiarW; i++)
+        {
+            if(Macierz[i][i]==0)
+                {
+                    throw std::runtime_error("Blad: Macierz osobliwa");
+                    exit(0);
+                }
+            for(j=i+1; j<this->RozmiarW; j++)
+                {
+                    mnoznik = Macierz[j][i]/Macierz[i][i];
+                    for(k=0;k<this->RozmiarW;k++)
+			            {
+			  		    Macierz[j][k] = Macierz[j][k] - mnoznik*Macierz[i][k];
+			            }
+                }
+        }
+
+       for(i=0; i<this->RozmiarW; i++)
+        {
+        Wyznacznik *= Macierz[i][i];    
+        }     
+    return Wyznacznik;
+}
+
+
 
