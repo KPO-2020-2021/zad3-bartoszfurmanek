@@ -3,8 +3,8 @@
 
 #include "Wektor2D.hh"
 
-#define WYMIAR_W 2
-#define WYMIAR_K 2
+#define WYMIAR 2
+
 
 /*!
  * Klasa reprezentująca macierz. Ilościa danych składowych
@@ -14,9 +14,9 @@
  */
 class Macierz {
 
-  int RozmiarK = WYMIAR_K;
-  int RozmiarW = WYMIAR_W;
-  double elem[WYMIAR_W][WYMIAR_K];
+  int RozmiarK = WYMIAR;
+  int RozmiarW = WYMIAR;
+  double elem[WYMIAR][WYMIAR];
   
   public:
 
@@ -43,6 +43,8 @@ class Macierz {
   Wektor2D operator* (Wektor2D W)const;
 
   friend std::ostream& operator << (std::ostream &Strm, const Macierz &Mac);
+
+  double Wyznacznik()const;
 
 
 };
